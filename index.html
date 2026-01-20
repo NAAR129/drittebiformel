@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dritte binomische Formel – Interaktive Gleichung</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .visualisierung {
+            flex: 1;
+            min-width: 300px;
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .formel {
+            flex: 1;
+            min-width: 300px;
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .box {
+            display: inline-block;
+            margin: 5px;
+            text-align: center;
+            font-weight: bold;
+            color: white;
+            padding: 8px;
+            border-radius: 3px;
+        }
+        .a_plus_b {
+            background-color: #3498db;
+        }
+        .a_minus_b {
+            background-color: #e74c3c;
+        }
+        .a2 {
+            background-color: #2ecc71;
+        }
+        .b2 {
+            background-color: #f39c12;
+        }
+        .slider-container {
+            margin: 15px 0;
+        }
+        .slider {
+            width: 100%;
+        }
+        .grafik {
+            margin: 20px 0;
+            text-align: center;
+            height: 250px;
+            overflow: visible;
+        }
+        .formel-box {
+            background-color: #e8f4fc;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 4px solid #3498db;
+        }
+        svg {
+            border: 1px solid #ddd;
+            background-color: white;
+        }
+        .merksatz {
+            background-color: #fff8e1;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dritte binomische Formel: (a + b)(a - b) = a² - b²</h1>
+
+    <div class="container">
+        <div class="visualisierung">
+            <h2>Interaktive Gleichung</h2>
+            <div id="gleichung">
+                <!-- Hier wird die Gleichung visualisiert -->
+            </div>
+            <div class="grafik">
+                <svg id="binomGrafik" width="400" height="250" viewBox="0 0 400 250"></svg>
+            </div>
+            <div class="slider-container">
+                <label for="aSlider">Wert für a:</label>
+                <input type="range" min="1" max="10" value="6" class="slider" id="aSlider">
+                <span id="aValue">6</span>
+            </div>
+            <div class="slider-container">
+                <label for="bSlider">Wert für b:</label>
+                <input type="range" min="1" max="10" value="3" class="slider" id="bSlider">
+                <span id="bValue">3</span>
+            </div>
+        </div>
+
+        <div class="formel">
+            <h2>Erklärung & Beispiel</h2>
+            <div class="formel-box">
+                <strong>(a + b)(a - b) = a² - b²</strong>
+            </div>
+            <p>
+                <strong>Beispiel:</strong><br>
+                Für a = 6 und b = 3:<br>
+                (6 + 3)(6 - 3) = 6² - 3²<br>
+                9 * 3 = 36 - 9<br>
+                27 = 27
+            </p>
+            <p>
+                <strong>Erklärung:</strong><br>
+                Die dritte binomische Formel besagt, dass das Produkt aus der Summe und der Differenz zweier Zahlen gleich der Differenz ihrer Quadrate ist.
+                Das bedeutet: Wenn du zwei Zahlen hast, addierst und subtrahierst sie und multiplizierst die Ergebnisse, erhältst du das Gleiche, wie wenn du die Quadrate der beiden Zahlen voneinander abziehst.
+            </p>
+            <div class="merksatz">
+                <strong>Merksatz:</strong><br>
+                "Summe mal Differenz ist gleich Quadratdifferenz!"<br>
+                → (a + b)(a - b) = a² - b²
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const aSlider = document.getElementById('aSlider');
+        const bSlider = document.getElementById('bSlider');
+        const aValue = document.getElementById('aValue');
+        const bValue = document.getElementById('bValue');
+
+        aSlider.oninput = function() {
+            aValue.textContent = this.value;
+            updateGleichung();
+        }
+        bSlider.oninput = function() {
+            bValue.textContent = this.value;
+            updateGleichung();
+        }
+
+        function updateGleichung() {
+            const a = parseInt(aSlider.value);
+            const b = parseInt(bSlider.value);
+            const gleichungDiv = document.getElementById('gleichung');
+            const svg = document.getElementById('binomGrafik');
+
+            // Aktualisiere die Gleichung
+            gleichungDiv.innerHTML = `
+                <div style="font-size: 1.2em; margin-bottom: 10px;">
+                    <span class="box a_plus_b">(a + b) = (${a} + ${b}) = ${a + b}</span>
+                    <span style="font-size: 1.5em;"> × </span>
+                    <span class="box a_minus_b">(a - b) = (${a} - ${b}) = ${a - b}</span>
+                    <span style="font-size: 1.5em;"> = </span>
+                    <span class="box a2">a² = ${a*a}</span>
+                    <span style="font-size: 1.5em;"> - </span>
+                    <span class="box b2">b² = ${b*b}</span>
+                    <span style="font-size: 1.5em;"> = ${(a + b) * (a - b)}</span>
+                </div>
+                <p>
+                    <strong>Visualisierung:</strong><br>
+                    Die beiden Faktoren (a + b) und (a - b) werden multipliziert.<br>
+                    Das Ergebnis ist die Differenz der Quadrate von a und b.
+                </p>
+            `;
+
+            // Aktualisiere die SVG-Grafik
+            const scale = 20;
+            const offsetX = 50;
+            const offsetY = 50;
+
+            svg.innerHTML = `
+                <!-- Großes Quadrat a² (grün) -->
+                <rect x="${offsetX}" y="${offsetY}" width="${a * scale}" height="${a * scale}"
+                      fill="#2ecc71" stroke="black" stroke-width="1" />
+                <text x="${offsetX + a * scale / 2}" y="${offsetY + a * scale / 2}"
+                      text-anchor="middle" fill="white" font-weight="bold" font-size="14">a²</text>
+
+                <!-- Kleines Quadrat b² (orange) -->
+                <rect x="${offsetX + (a - b) * scale}" y="${offsetY}"
+                      width="${b * scale}" height="${b * scale}"
+                      fill="#f39c12" stroke="black" stroke-width="1" />
+                <text x="${offsetX + (a - b/2) * scale}" y="${offsetY + b * scale / 2}"
+                      text-anchor="middle" fill="black" font-weight="bold" font-size="14">b²</text>
+
+                <!-- Schraffiertes Rechteck (a+b)(a-b) (blau/rot) -->
+                <defs>
+                    <pattern id="stripes" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(90)">
+                        <rect width="5" height="10" fill="#3498db" />
+                        <rect x="5" width="5" height="10" fill="#e74c3c" />
+                    </pattern>
+                </defs>
+                <rect x="${offsetX + a * scale + 20}" y="${offsetY}" width="${(a + b) * scale}" height="${(a - b) * scale}"
+                      fill="url(#stripes)" stroke="black" stroke-width="1" />
+                <text x="${offsetX + a * scale + 20 + (a + b) * scale / 2}"
+                      y="${offsetY + (a - b) * scale / 2}"
+                      text-anchor="middle" fill="white" font-weight="bold" font-size="14">(a+b)(a-b)</text>
+
+                <!-- Legende -->
+                <rect x="${offsetX}" y="${offsetY + a * scale + 20}" width="10" height="10" fill="#2ecc71" />
+                <text x="${offsetX + 15}" y="${offsetY + a * scale + 30}" font-size="12">a²</text>
+                <rect x="${offsetX + 70}" y="${offsetY + a * scale + 20}" width="10" height="10" fill="#f39c12" />
+                <text x="${offsetX + 85}" y="${offsetY + a * scale + 30}" font-size="12">b²</text>
+                <rect x="${offsetX + 140}" y="${offsetY + a * scale + 20}" width="10" height="10" fill="url(#stripes)" />
+                <text x="${offsetX + 155}" y="${offsetY + a * scale + 30}" font-size="12">(a+b)(a-b)</text>
+            `;
+        }
+
+        window.onload = updateGleichung;
+    </script>
+</body>
+</html>
